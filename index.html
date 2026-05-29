@@ -46,6 +46,10 @@
             margin-bottom: 5px;
             color: #333;
         }
+        label.required::after {
+            content: " *";
+            color: red;
+        }
         input, select, textarea {
             width: 100%;
             padding: 10px;
@@ -87,15 +91,15 @@
     <form id="complaintForm">
         <div class="form-grid">
             <div>
-                <label>Complaint ID</label>
+                <label class="required">Complaint ID</label>
                 <input type="text" id="complaintId" required>
             </div>
             <div>
-                <label>Complaint Locked By</label>
+                <label class="required">Complaint Locked By</label>
                 <input type="text" id="lockedBy" required>
             </div>
             <div>
-                <label>Date & Timestamp</label>
+                <label class="required">Date & Timestamp</label>
                 <input type="datetime-local" id="timestamp" required>
             </div>
             <div>
@@ -104,30 +108,34 @@
             </div>
             <div class="full-width">
                 <label>Item</label>
-                <input type="text" id="item" required>
+                <input type="text" id="item">
             </div>
             <div class="full-width">
-                <label>Complaint Detail</label>
+                <label class="required">Complaint Detail</label>
                 <textarea id="detail" required></textarea>
             </div>
             <div>
-                <label>Department</label>
+                <label class="required">Department</label>
                 <select id="department" required>
                     <option value="">Select...</option>
-                    <option value="IT">IT</option>
+                    <option value="IT Offsite Support">IT Offsite Support</option>
+                    <option value="IT Service Desk">IT Service Desk</option>
+                    <option value="IT HIS Team">IT HIS Team</option>
                     <option value="Maintenance">Maintenance</option>
                     <option value="MEP">MEP</option>
+                    <option value="BME">BME</option>
                     <option value="Powerplant">Powerplant</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Housekeeping">Housekeeping</option>
-                    <option value="Sysmex">Sysmex</option>
-                    <option value="Roche">Roche</option>
+                    <option value="Sysmex (Vendor)">Sysmex (Vendor)</option>
+                    <option value="Roche (Vendor)">Roche (Vendor)</option>
                     <option value="Advia">Advia</option>
+                    <option value="Transport">Transport</option>
                     <option value="Other">Other</option>
                 </select>
             </div>
             <div>
-                <label>Current Status</label>
+                <label class="required">Current Status</label>
                 <select id="status" required>
                     <option value="Open">Open</option>
                     <option value="In Progress">In Progress</option>
@@ -138,7 +146,7 @@
             </div>
             <div>
                 <label>Priority Level</label>
-                <select id="priority" required>
+                <select id="priority">
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
@@ -168,8 +176,8 @@
 </div>
 
 <script>
-    // REPLACE THIS URL WITH YOUR WEB APP DEPLOYMENT URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyMM227PAK6yeJkYJ1wFrYz8xSPRyRJw9v50k7llG3b3NUefxnOLropWCD99yRYMfxwZQ/exec'; 
+    // REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'; 
 
     const form = document.getElementById('complaintForm');
     const statusMessage = document.getElementById('statusMessage');
@@ -179,7 +187,6 @@
         statusMessage.textContent = "Submitting...";
         statusMessage.style.color = "#333";
 
-        // Gather form data into an object
         const formData = {
             complaintId: document.getElementById('complaintId').value,
             lockedBy: document.getElementById('lockedBy').value,
@@ -196,7 +203,6 @@
             managerRemarks: document.getElementById('managerRemarks').value
         };
 
-        // Send data to Google Apps Script
         fetch(scriptURL, {
             method: 'POST',
             body: JSON.stringify(formData),
