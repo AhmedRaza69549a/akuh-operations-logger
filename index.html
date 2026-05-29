@@ -95,18 +95,28 @@
                 <input type="text" id="complaintId" required>
             </div>
             <div>
-                <label class="required">Complaint Locked By</label>
-                <input type="text" id="lockedBy" required>
+                <label class="required">Outreach Lab</label>
+                <select id="outreachLab" required>
+                    <option value="">Select Lab...</option>
+                    <option value="Main Outreach Lab">Main Outreach Lab</option>
+                    <option value="North Branch">North Branch</option>
+                    <option value="South Branch">South Branch</option>
+                    <option value="East Branch">East Branch</option>
+                    </select>
+            </div>
+            <div>
+                <label class="required">Complaint Logged By</label>
+                <input type="text" id="loggedBy" required>
             </div>
             <div>
                 <label class="required">Date & Timestamp</label>
                 <input type="datetime-local" id="timestamp" required>
             </div>
             <div>
-                <label>Asset Tag</label>
+                <label>Asset Tag #</label>
                 <input type="text" id="assetTag">
             </div>
-            <div class="full-width">
+            <div>
                 <label>Item</label>
                 <input type="text" id="item">
             </div>
@@ -141,7 +151,6 @@
                     <option value="In Progress">In Progress</option>
                     <option value="Escalated">Escalated</option>
                     <option value="Resolved">Resolved</option>
-                    <option value="Closed">Closed</option>
                 </select>
             </div>
             <div>
@@ -176,8 +185,8 @@
 </div>
 
 <script>
-    // REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyMM227PAK6yeJkYJ1wFrYz8xSPRyRJw9v50k7llG3b3NUefxnOLropWCD99yRYMfxwZQ/exec'; 
+    // REPLACE THIS URL WITH YOUR NEW GOOGLE APPS SCRIPT WEB APP URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx8T7gPspgS4mhhlHzdkeLRPHBVtwzoHc24Tz-i-XGleR48ZH0pLdw_fKr8YVYNZuN3aw/exec'; 
 
     const form = document.getElementById('complaintForm');
     const statusMessage = document.getElementById('statusMessage');
@@ -189,7 +198,8 @@
 
         const formData = {
             complaintId: document.getElementById('complaintId').value,
-            lockedBy: document.getElementById('lockedBy').value,
+            outreachLab: document.getElementById('outreachLab').value,
+            loggedBy: document.getElementById('loggedBy').value,
             timestamp: document.getElementById('timestamp').value.replace('T', ' '),
             assetTag: document.getElementById('assetTag').value,
             item: document.getElementById('item').value,
